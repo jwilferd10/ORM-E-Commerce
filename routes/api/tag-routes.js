@@ -3,10 +3,15 @@ const { Tag, Product, ProductTag } = require('../../models');
 
 // The `/api/tags` endpoint
 
+// find all tags and be sure to include its associated Product data
 router.get('/', (req, res) => {
-  // find all tags
-  // be sure to include its associated Product data
-  Tag.findAll({})
+  Tag.findAll(
+    {
+      include: {
+        model: Product
+      }
+    }
+  )
   .then(dbTagData => res.json(dbTagData))
   .catch(err => {
     console.log(err);
@@ -14,11 +19,16 @@ router.get('/', (req, res) => {
   });
 });
 
+// find a single tag by its `id` and be sure to include its associated Product data
+// REMINDER: Needs to be further tested, I'm not sure if it'll work all the way or not
 router.get('/:id', (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
   Tag.findOne({
-    where: { tag: req.params.tag }
+    where: { 
+      tag: req.params.tag 
+    },
+    include: {
+      model: Product
+    }
   })
   .then(dbTagData => {
     if (!dbTagData) {
@@ -47,9 +57,17 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
-  Tag.update({
-    where: { id: req.params.id }
-  })
+  Tag.update(
+    // Test: get tag_name from req.body
+    { 
+      tag_name: req.body.tag_name 
+    },
+    {
+      where: { 
+        id: req.params.id 
+      }
+    }
+  )
   .then (dbTagData => {
     if (!dbTagData[0]) {
       res.status(404).json({ message: 'No tag name found with this id' });
