@@ -75,14 +75,14 @@ Install this project by clicking the *GREEN* button above, you can download it b
 
 Everything else follows simple and easy to remember CRUD methods! 
  
- ## For Quick and Easy Testing!
+ ### For Quick and Easy Testing!
  
- ### Localhost Links 
+ #### Localhost Links 
  - localhost:3001/api/products/
  - localhost:3001/api/tags/
  - localhost:3001/api/categories/
- #### **OR** 
- ### Heroku Links (Reminder: Be prepared to toy around with it!)
+ ##### **OR** 
+ #### Heroku Links (Reminder: Be prepared to toy around with it!)
  - https://tranquil-sands-85208.herokuapp.com/api/products/
  - https://tranquil-sands-85208.herokuapp.com/api/tags/
  - https://tranquil-sands-85208.herokuapp.com/api/categories/
