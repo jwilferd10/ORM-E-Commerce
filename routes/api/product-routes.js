@@ -50,15 +50,15 @@ router.get('/:id', (req, res) => {
 });
 
 // create new product
+/* req.body should look like this...
+{
+  product_name: "Basketball",
+  price: 200.00,
+  stock: 3,
+  tagIds: [1, 2, 3, 4]
+}
+*/ 
 router.post('/', (req, res) => {
-    /* req.body should look like this...
-    {
-      product_name: "Basketball",
-      price: 200.00,
-      stock: 3,
-      tagIds: [1, 2, 3, 4]
-    }
-  */ 
 
   Product.create({
     product_name: req.body.product_name,
@@ -67,33 +67,27 @@ router.post('/', (req, res) => {
     tagIds: req.body.tagIds
   })
   // Reminder: Come back to this and find a way to create a new product
-  // Connect it to an array?
+  // Connect it to an array? 
+  // Test: An error occurs here when we try npm start, probably a syntax error if anything
   .then((product) => {
     if (req.body.tagIds.length) {
-      const product
-    }
+      const productTagIdArr = req.body.tagIds.map((tag_id) => {
+      return {
+        product_id: product.id,
+        tag_id,
+      };
+  });
+    // Look into bulkCreate
+    // Notes: Create and insert multiple instances in bulk.
+    return ProductTag.bulkCreate(productTagIdArr);
+  }
+    res.status(200).json(product);
   })
-
-  Product.create(req.body)
-    .then((product) => {
-      // if there's product tags, we need to create pairings to bulk create in the ProductTag model
-      if (req.body.tagIds.length) {
-        const productTagIdArr = req.body.tagIds.map((tag_id) => {
-          return {
-            product_id: product.id,
-            tag_id,
-          };
-        });
-        return ProductTag.bulkCreate(productTagIdArr);
-      }
-      // if no product tags, just respond
-      res.status(200).json(product);
-    })
-    .then((productTagIds) => res.status(200).json(productTagIds))
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
-    });
+  .then((productTagIds) => res.status(200).json(productTagIds))
+  .catch((err) => {
+    console.log(err);
+    res.status(400).json(err);
+  });
 });
 
 // update product
