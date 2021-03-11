@@ -90,40 +90,6 @@ router.post('/', (req, res) => {
     });
 });
 
-
-
-// router.post('/', (req, res) => {
-
-//   Product.create({
-//     product_name: req.body.product_name,
-//     price: req.body.price,
-//     stock: req.body.stock,
-//     tagIds: req.body.tagIds
-//   })
-//   // Reminder: Come back to this and find a way to create a new product
-//   // Connect it to an array? 
-//   // Test: An error occurs here when we try npm start, probably a syntax error if anything
-//   .then((product) => {
-//     if (req.body.tagIds.length) {
-//       const productTagIdArr = req.body.tagIds.map((tag_id) => {
-//       return {
-//         product_id: product.id,
-//         tag_id,
-//       };
-//   });
-//     // Look into bulkCreate
-//     // Notes: Create and insert multiple instances in bulk.
-//     return ProductTag.bulkCreate(productTagIdArr);
-//   }
-//     res.status(200).json(product);
-//   })
-//   .then((productTagIds) => res.status(200).json(productTagIds))
-//   .catch((err) => {
-//     console.log(err);
-//     res.status(400).json(err);
-//   });
-// });
-
 //==================//
 
 // Update a Product
