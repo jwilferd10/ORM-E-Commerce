@@ -3,22 +3,25 @@ const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
 
+//==================//
+
 // Find all the categories available
+// Note: Unsure if findAll needs to be empty or have an include in it, Reminder to be sure to test this to see if any error pops up.
 router.get('/', (req, res) => {
-  Category.findAll(
-    {
+  Category.findAll ({
       include: {
         model: Product,
         attributes: ['product_name']
       }
-    }
-  )
+  })
   .then(dbCategoryData => res.json(dbCategoryData))
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
   });
 });
+
+//==================//
 
 // find one category by its `id` value, be sure to include its associated Products
 router.get ('/:id', (req, res) => {
@@ -46,6 +49,8 @@ router.get ('/:id', (req, res) => {
   })
 })
 
+//==================//
+
 // Create a new category
 router.post('/', (req, res) => {
   Category.create ({
@@ -58,9 +63,11 @@ router.post('/', (req, res) => {
   });
 });
 
+//==================//
+
 // Update a category by its `id` value
 router.put('/:id', (req, res) => {
-  Category.update(
+  Category.update (
     {
       category_name: req.body.category_name
     },
@@ -70,8 +77,8 @@ router.put('/:id', (req, res) => {
       }
     })
     .then (dbCategoryData => {
-      if (!dbCategoryData[0]) {
-        res.status(404).json({ message: 'No category name found with this id' });
+      if (!dbCategoryData) {
+        res.status(404).json({ message: 'There is NO category name found with this id!!' });
         return;
       }
       res.json(dbCategoryData);
@@ -82,16 +89,18 @@ router.put('/:id', (req, res) => {
     });
 });
 
+//==================//
+
 // Delete a category by its `id` value
 router.delete('/:id', (req, res) => {
-  Category.destroy({
+  Category.destroy ({
     where: { 
       id: req.params.id 
     }
   })
   .then(dbCategoryData => {
     if (!dbCategoryData) {
-      res.status(404).json({ message: 'No category name found with this id' });
+      res.status(404).json({ message: 'There is NO category name found with this id!!' });
       return;
     }
     res.json(dbCategoryData);

@@ -3,6 +3,8 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
 
+//==================//
+
 // get all products
 // find all products be sure to include its associated Category and Tag data
 router.get('/', (req, res) => {
@@ -24,6 +26,8 @@ router.get('/', (req, res) => {
   .catch (err);
     res.status(500).json(err);
 });
+
+//==================//
 
 // get one product
 router.get('/:id', (req, res) => {
@@ -48,6 +52,8 @@ router.get('/:id', (req, res) => {
     res.status(500).json(err);
   });
 });
+
+//==================//
 
 // create new product
 /* req.body should look like this...
@@ -90,7 +96,9 @@ router.post('/', (req, res) => {
   });
 });
 
-// update product
+//==================//
+
+// Update a Product
 router.put('/:id', (req, res) => {
   // update product data
   Product.update(req.body, {
@@ -132,13 +140,16 @@ router.put('/:id', (req, res) => {
     });
 });
 
+//==================//
+
+// Delete one product by its `id` value
 router.delete('/:id', (req, res) => {
-  // delete one product by its `id` value
-  Product.destroy({
+  Product.destroy ({
     where: {
       id: req.params.id
     }
   })
+  // Reminder: This might be a reference error. Reminder to test in Insomnia pronto
   .then(dbProductData => {
     if (!dbProductData) {
       res.status(404).json({ message: 'No Product found with this ID' });
