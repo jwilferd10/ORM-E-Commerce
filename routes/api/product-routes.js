@@ -5,21 +5,21 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 //==================//
 
-// get all products
-// find all products be sure to include its associated Category and Tag data
+// Get all the products
+// Find all products be sure to include its associated Category and Tag data
 router.get('/', (req, res) => {
   Product.findAll (
     {
-      include: [
-        {
-          model: Category,
-          attributes: ['category_name']
-        },
-        {
-          model: Tag,
-          attributes: ['tag_name']
-        }
-      ]
+      // include: [
+      //   {
+      //     model: Category,
+      //     attributes: ['category_name']
+      //   },
+      //   {
+      //     model: Tag,
+      //     attributes: ['tag_name']
+      //   }
+      // ]
     }
   )
   .then(dbProductData => res.json(dbProductData))
@@ -29,9 +29,10 @@ router.get('/', (req, res) => {
 
 //==================//
 
-// get one product
+// Get one product
+// Find a single product by it's 'id', be sure to include it's associated Category and Tag data
 router.get('/:id', (req, res) => {
-  Product.findOne({
+  Product.findOne ({
     where: { 
       id: req.params.id 
     },
@@ -55,46 +56,71 @@ router.get('/:id', (req, res) => {
 
 //==================//
 
-// create new product
-/* req.body should look like this...
-{
-  product_name: "Basketball",
-  price: 200.00,
-  stock: 3,
-  tagIds: [1, 2, 3, 4]
-}
-*/ 
+// Create a new product
 router.post('/', (req, res) => {
-
-  Product.create({
-    product_name: req.body.product_name,
-    price: req.body.price,
-    stock: req.body.stock,
-    tagIds: req.body.tagIds
-  })
-  // Reminder: Come back to this and find a way to create a new product
-  // Connect it to an array? 
-  // Test: An error occurs here when we try npm start, probably a syntax error if anything
-  .then((product) => {
-    if (req.body.tagIds.length) {
-      const productTagIdArr = req.body.tagIds.map((tag_id) => {
-      return {
-        product_id: product.id,
-        tag_id,
-      };
-  });
-    // Look into bulkCreate
-    // Notes: Create and insert multiple instances in bulk.
-    return ProductTag.bulkCreate(productTagIdArr);
-  }
-    res.status(200).json(product);
-  })
-  .then((productTagIds) => res.status(200).json(productTagIds))
-  .catch((err) => {
-    console.log(err);
-    res.status(400).json(err);
-  });
+  /* req.body should look like this...
+    {
+      product_name: "Basketball",
+      price: 200.00,
+      stock: 3,
+      tagIds: [1, 2, 3, 4]
+    }
+  */
+  Product.create(req.body)
+    .then((product) => {
+      // if there's product tags, we need to create pairings to bulk create in the ProductTag model
+      if (req.body.tagIds.length) {
+        const productTagIdArr = req.body.tagIds.map((tag_id) => {
+          return {
+            product_id: product.id,
+            tag_id,
+          };
+        });
+        return ProductTag.bulkCreate(productTagIdArr);
+      }
+      // if no product tags, just respond
+      res.status(200).json(product);
+    })
+    .then((productTagIds) => res.status(200).json(productTagIds))
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json(err);
+    });
 });
+
+
+
+// router.post('/', (req, res) => {
+
+//   Product.create({
+//     product_name: req.body.product_name,
+//     price: req.body.price,
+//     stock: req.body.stock,
+//     tagIds: req.body.tagIds
+//   })
+//   // Reminder: Come back to this and find a way to create a new product
+//   // Connect it to an array? 
+//   // Test: An error occurs here when we try npm start, probably a syntax error if anything
+//   .then((product) => {
+//     if (req.body.tagIds.length) {
+//       const productTagIdArr = req.body.tagIds.map((tag_id) => {
+//       return {
+//         product_id: product.id,
+//         tag_id,
+//       };
+//   });
+//     // Look into bulkCreate
+//     // Notes: Create and insert multiple instances in bulk.
+//     return ProductTag.bulkCreate(productTagIdArr);
+//   }
+//     res.status(200).json(product);
+//   })
+//   .then((productTagIds) => res.status(200).json(productTagIds))
+//   .catch((err) => {
+//     console.log(err);
+//     res.status(400).json(err);
+//   });
+// });
 
 //==================//
 
