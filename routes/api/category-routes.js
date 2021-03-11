@@ -3,7 +3,7 @@ const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
 
-  // find all categories and be sure to include its associated Products
+// Find all the categories available
 router.get('/', (req, res) => {
   Category.findAll(
     {
@@ -21,33 +21,34 @@ router.get('/', (req, res) => {
 });
 
 // find one category by its `id` value, be sure to include its associated Products
-router.get('/:id', (req, res) => {
-  Category.findOne({
-    where: { 
-      id: req.params.id 
+router.get ('/:id', (req, res) => {
+  Category.findOne ({
+    where: {
+      id: req.params.id,
     },
-    include: 
-    { model: Product, 
-      attributes: ['category_id']
-    }
+    include: [
+      {
+        model: Product,
+        attributes: ['id', 'product_name', 'price'],
+      },
+    ],
   })
-  .then (dbCategoryData => res.json(dbCategoryData))
-  // .then(dbCategoryData => {
-  //   if (!dbCategoryData) {
-  //     res.status(404).json({ message: 'No category name found with this id' });
-  //     return;
-  //   }
-  //   res.json(dbCategoryData);
-  // })
+  .then ((dbCategoryData) => {
+    if (!dbCategoryData) {
+      res.status(404).json({ message: 'There is NO category name found with this id!!' });
+      return;
+    }
+    res.json(dbCategoryData);
+  })
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
-  });
-});
+  })
+})
 
 // Create a new category
 router.post('/', (req, res) => {
-  Category.create({
+  Category.create ({
     category_name: req.body.category_name
   })
   .then(dbCategoryData => res.json(dbCategoryData))
