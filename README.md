@@ -58,6 +58,14 @@ Install this project by clicking the *GREEN* button above, you can download it b
 <p> Live Deployment: https://tranquil-sands-85208.herokuapp.com/ </p>
 
 ### How To Use: 
+**Connecting to Database**: <br>
+1. Create a environment variable file (env)
+2. Make sure you're in a cmd prompt and enter: (Example) mysql -u root -p <br>
+3. Create the database by typing: source db/schema.sql <br>
+4. Run npm run seed
+5. Type npm start
+
+**Back-End Testing:**
 - Products
   - To create a new product you'll want to enter: product_name, price, stock, category_id, and finally the tagIds *Note: Needs to be an Array!*
 - Tags
