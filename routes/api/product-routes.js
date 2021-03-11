@@ -58,8 +58,7 @@ router.get('/:id', (req, res) => {
 
 //==================//
 
-// Create a new product
-router.post('/', (req, res) => {
+// NEW PRODUCTS SHOULD LOOK LIKE THIS
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -68,7 +67,18 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
-  Product.create(req.body)
+
+// Create a new product
+router.post('/', (req, res) => {
+  // Creating a new product currently doesn't work. Comment out the OG
+  // Product.create(req.body)
+  // Request for appropriate details
+  Product.create ({
+    product_name: (req.body.product_name),
+    price: (req.body.price),
+    stock: (req.body.stock),
+    tagIds: (req.body.tagIds)
+  })
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
