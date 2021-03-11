@@ -5,6 +5,7 @@
 ## Table of Contents 
   - [Description](#description)
   - [User Story](#user-story)
+  - [Resources Used](#resources-used)
   - [Installation](#installation)
   - [Usage](#usage)
   - [Contact Information](#contact-information)
@@ -33,6 +34,13 @@ Internet retail, also known as e-commerce, is the largest sector of the electron
 
 - WHEN I test API POST, PUT, and DELETE routes in Insomnia Core
   - THEN I am able to successfully create, update, and delete data in my database
+
+## Resources Used
+
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.1.0",
+    "sequelize": "^5.21.7"
 
 ## Installation
 Install this project by clicking the *GREEN* button above, you can download it by ZIP or copy the SSH!
