@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   Tag.findOne({
     where: { 
-      tag: req.params.tag 
+      id: req.params.id
     },
     include: {
       model: Product
