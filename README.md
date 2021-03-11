@@ -1,6 +1,13 @@
 # ORM-E-Commerce
 
-## Video Rundown
+## Video Rundown:
+
+https://youtu.be/13dE4sOPyVA
+
+## Links
+**Live Deployment:** https://tranquil-sands-85208.herokuapp.com/
+<br>
+**Github Repo:** https://github.com/jwilferd10/ORM-E-Commerce
 
 ## Table of Contents 
   - [Description](#description)
@@ -67,7 +74,7 @@ Everything else follows simple and easy to remember CRUD methods!
  - localhost:3001/api/tags/
  - localhost:3001/api/categories/
  #### **OR** 
- ### Heroku Links (Reminder: Be prepared to play around with it)
+ ### Heroku Links (Reminder: Be prepared to toy around with it!)
  - https://tranquil-sands-85208.herokuapp.com/api/products/
  - https://tranquil-sands-85208.herokuapp.com/api/tags/
  - https://tranquil-sands-85208.herokuapp.com/api/categories/
